@@ -53,6 +53,9 @@ class ProductsFragment : Fragment() {
         searchViewModel.clearPagedListItems.observe(viewLifecycleOwner){
             productsAdapter.submitData(lifecycle, PagingData.empty())
         }
+        searchViewModel.queryString.observe(viewLifecycleOwner){
+            productsAdapter.setQueryStringValue(it)
+        }
     }
 
 }

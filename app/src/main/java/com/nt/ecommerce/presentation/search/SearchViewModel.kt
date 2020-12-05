@@ -14,6 +14,9 @@ class SearchViewModel @ViewModelInject constructor(
 
 ):ViewModel(){
 
+    private var _queryString = MutableLiveData<String>()
+    val queryString = _queryString
+
     private var _clearPagedListItems = MutableLiveData<Unit>()
     val clearPagedListItems = _clearPagedListItems
 
@@ -22,6 +25,8 @@ class SearchViewModel @ViewModelInject constructor(
     val products = MediatorLiveData<PagingData<String>>()
 
     fun resetAndPerformSearch(query: String) {
+        removePagedListData()
+        _queryString.postValue(query)
         products.addSource(
             Pager(pagingConfig) {
             ProductPagingSource(query,searchUseCase)
